@@ -1,0 +1,273 @@
+.tabuleiro {
+    display: grid;
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
+    /* Remover a borda */
+    border: none; /* Removido */
+    /* Adicionar a cor desejada */
+    background-color: #769656; /* Ajuste de cor */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  
+/* Estilos gerais para telas grandes */
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0; /* cor opcional */
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilos para mobile e tablet (focar em 836x632) */
+@media screen and (max-width: 1024px) {
+  body, html {
+    width: 836px;
+    height: 632px;
+    margin: 0 auto;
+    overflow: hidden;
+    background-color: #fff; /* cor de fundo opcional */
+  }
+
+  .container {
+    width: 836px;
+    height: 632px;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+  }
+}
+
+/* Para dispositivos super pequenos */
+@media screen and (max-width: 450px) {
+  body, html {
+    width: 836px;
+    height: 632px;
+  }
+
+  .container {
+    width: 836px;
+    height: 632px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+}
+
+
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+#abrirRanking {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #ffc107;
+  border: none;
+  color: black;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+}
+
+#abrirRanking:hover {
+  background-color: #e0a800;
+}
+
+#painelRanking {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  padding: 20px;
+  width: 260px;
+  max-height: 240px;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  z-index: 999;
+}
+
+.painel-aberto {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+#painelRanking h2 {
+  margin-top: 0;
+  font-size: 1.4em;
+  color: #333;
+}
+
+#painelRanking p {
+  margin: 10px 0;
+  font-size: 1em;
+}
+
+#painelRanking button {
+  margin-top: 10px;
+  margin-right: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#fecharBtn {
+  background-color: #dc3545;
+  color: white;
+}
+
+#adicionarBtn {
+  background-color: #28a745;
+  color: white;
+}
+
+#resetarBtn {
+  background-color: #007bff;
+  color: white;
+}
+
+
+.botoes-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 1000;
+}
+
+.botao {
+  background: linear-gradient(135deg, #007bff, #00c6ff);
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.botao:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #0055cc, #0090cc);
+}
+
+.painel-ranking {
+  position: fixed;
+  left: 50%;
+  bottom: -100%;
+  transform: translateX(-50%);
+  background: white;
+  width: 280px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  text-align: center;
+  transition: bottom 0.4s ease;
+  z-index: 2000;
+}
+
+.painel-ranking.ativo {
+  bottom: 100px;
+}
+
+.fechar-ranking {
+  margin-top: 10px;
+  padding: 6px 14px;
+  border: none;
+  background-color: #ff5e57;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+@media (max-width: 745px) and (max-height: 632px) {
+  .area-jogo {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .tabuleiro {
+    width: 90vw;
+    height: 90vw; /* quadrado responsivo */
+    max-width: 400px;
+    max-height: 400px;
+  }
+
+  .painel-jogador {
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    font-size: 0.9em;
+  }
+
+  .capturas {
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+  }
+
+  .pecas-capturadas {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .mensagem {
+    font-size: 1.1em;
+  }
+
+  .vez {
+    font-size: 0.8em;
+  }
+
+  .contador {
+    font-size: 0.8em;
+  }
+}
+
+

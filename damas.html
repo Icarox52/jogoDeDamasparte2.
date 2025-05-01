@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+  <title>Jogo de Damas</title>
+  <style>
+ body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    #abrirRanking {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #ffc107;
+      border: none;
+      color: black;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+      z-index: 1000;
+    }
+
+    #abrirRanking:hover {
+      background-color: #e0a800;
+    }
+
+    #painelRanking {
+      position: fixed;
+      bottom: 80px;
+      left: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      padding: 20px;
+      width: 250px;
+      max-height: 200px;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      z-index: 999;
+    }
+
+    .painel-aberto {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+
+    #painelRanking button {
+      margin-top: 15px;
+      padding: 8px 14px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #painelRanking h2 {
+      margin-top: 0;
+      font-size: 1.4em;
+      color: #333;
+    }
+
+#abrirRanking {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #ffc107;
+  border: none;
+  color: black;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+}
+
+#abrirRanking:hover {
+  background-color: #e0a800;
+}
+
+#painelRanking {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  padding: 20px;
+  width: 250px;
+  max-height: 200px;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  z-index: 999;
+}
+
+.painel-aberto {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+#painelRanking button {
+  margin-top: 15px;
+  padding: 8px 14px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#painelRanking h2 {
+  margin-top: 0;
+  font-size: 1.4em;
+  color: #333;
+}
+
+
+    * {
+      margin: 0;
+      padding: 0;
+    box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      background-color: #e9d558;
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      position: relative;
+    }
+
+    .tabuleiro {
+      display: grid;
+      grid-template-columns: repeat(8, 60px);
+      grid-template-rows: repeat(8, 60px);
+      border: 5px solid #4a4a4a;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .casa {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .preta {
+      background-color: #769656;
+    }
+
+    .branca {
+      background-color: #eeeed2;
+    }
+
+    .peca {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .preta-peca {
+      background-color: #000000; /* Cor da peça preta */
+    }
+
+    .branca-peca {
+      background-color: #ffffff; /* Cor da peça branca */
+    }
+
+    .selecionada {
+      outline: 3px solid #f8d700;
+      transform: scale(1.1);
+    }
+
+    .mensagem, .pontuacao {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #444;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+
+    .nome-jogador {
+      font-weight: bold;
+      font-size: 22px;
+      margin-top: 10px;
+    }
+
+    .menu-configuracoes {
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .config-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 16px;
+      font-size: 16px;
+      background-color: #4a4a4a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .config-btn:hover {
+      background-color: #333;
+    }
+
+    .opcao-config {
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+      font-size: 15px;
+    }
+
+    .opcao-config:hover {
+      background-color: #f0f0f0;
+    }
+
+    .tabuleiro .peca {
+      transform: scale(0);
+      animation: aparecer 0.4s ease forwards;
+    }
+
+    @keyframes aparecer {
+      to {
+        transform: scale(1);
+      }
+    }
+
+    /* Animação da esquerda para a direita para o modal */
+    @keyframes slideInLeft {
+      from {
+        transform: translateX(-100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    /* Animação do modal de selecionar nome */
+    #modal {
+      position: absolute;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 10;
+      animation: slideInLeft 0.5s ease-out; /* Animação ao abrir o modal */
+    }
+
+    #modal input {
+      margin: 8px 0;
+      padding: 8px;
+      width: 220px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #modal button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #4a4a4a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #modal h2 {
+      margin-bottom: 10px;
+    }
+
+    /* Animação do jogo iniciar */
+    @keyframes slideInGameStart {
+      from {
+        transform: translateX(-100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    .tabuleiro {
+      animation: slideInGameStart 0.6s ease-out;
+    }
+
+
+    .casa.possivel {
+  box-shadow: 0 0 0 3px yellow inset;
+  cursor: pointer;
+}
+
+
+
+    
+  </style>
+</head>
+<body>
+
+
+  <!-- Modal para nome dos jogadores -->
+  <div id="modal">
+    <h2>Bem-vindo ao Jogo de Damas</h2>
+    <label>Nome do Jogador 1 (Preto):</label>
+    <input type="text" id="nome1" placeholder="Jogador 1" />
+    <label>Nome do Jogador 2 (Branco):</label>
+    <input type="text" id="nome2" placeholder="Jogador 2" />
+    <button id="iniciar">Iniciar</button>
+  </div>
+
+  <div id="tabuleiro" class="tabuleiro"></div>
+  <h2 class="nome-jogador" id="nomeJogador"></h2>
+  <h1 class="mensagem" id="mensagem"><strong>Vez de: </strong></h1>
+  <div class="pontuacao" id="pontuacao">Pontuação: Jogador 1 - 0 | Jogador 2 - 0</div>
+
+
+
+  <script>
+    const tabuleiro = document.getElementById('tabuleiro');
+    const mensagem = document.getElementById('mensagem');
+    const pontuacao = document.getElementById('pontuacao');
+    const nomeJogador = document.getElementById('nomeJogador');
+    const configBtn = document.getElementById('configBtn');
+    const menuConfig = document.getElementById('menuConfig');
+    const irParaInicio = document.getElementById('irParaInicio');
+    const resetarPartida = document.getElementById('resetarPartida');
+
+    let pecaSelecionada = null;
+    let turno = 0; // 0: Jogador 1 (Preto), 1: Jogador 2 (Branco)
+    let score = [0, 0];
+    let nomes = ['Jogador 1', 'Jogador 2'];
+
+    document.getElementById('iniciar').addEventListener('click', () => {
+      const nome1 = document.getElementById('nome1').value.trim() || 'Jogador 1';
+      const nome2 = document.getElementById('nome2').value.trim() || 'Jogador 2';
+      nomes = [nome1, nome2];
+      document.getElementById('modal').style.display = 'none';
+      mensagem.innerHTML = `<strong>Vez de: ${nomes[turno]}</strong>`;
+      nomeJogador.textContent = `${nomes[turno]} - Cor: ${turno === 0 ? 'Preto' : 'Branco'}`;
+      nomeJogador.style.color = turno === 0 ? '#000000' : '#ffffff';
+      criarTabuleiro();
+    });
+
+    function criarTabuleiro() {
+      tabuleiro.innerHTML = '';
+      for (let linha = 0; linha < 8; linha++) {
+        for (let coluna = 0; coluna < 8; coluna++) {
+          const casa = document.createElement('div');
+          casa.classList.add('casa', (linha + coluna) % 2 === 0 ? 'branca' : 'preta');
+          casa.dataset.linha = linha;
+          casa.dataset.coluna = coluna;
+
+          if (linha >= 0 && linha <= 2 && casa.classList.contains('preta')) {
+            const peca = document.createElement('div');
+            peca.classList.add('peca', 'preta-peca');
+            casa.appendChild(peca);
+          }
+
+          if (linha >= 5 && linha <= 7 && casa.classList.contains('preta')) {
+            const peca = document.createElement('div');
+            peca.classList.add('peca', 'branca-peca');
+            casa.appendChild(peca);
+          }
+
+          casa.addEventListener('click', () => aoClicar(casa));
+          tabuleiro.appendChild(casa);
+        }
+      }
+    }
+
+    function aoClicar(casa) {
+      const peca = casa.querySelector('.peca');
+
+      if (peca && éVezDoJogador(peca)) {
+        selecionarPeca(peca);
+      } else if (pecaSelecionada) {
+        moverPeca(casa);
+      }
+    }
+
+    function éVezDoJogador(peca) {
+      return (turno === 0 && peca.classList.contains('preta-peca')) ||
+             (turno === 1 && peca.classList.contains('branca-peca'));
+    }
+
+    function selecionarPeca(peca) {
+      if (pecaSelecionada) {
+        pecaSelecionada.classList.remove('selecionada');
+      }
+      pecaSelecionada = peca;
+      pecaSelecionada.classList.add('selecionada');
+    }
+
+    function moverPeca(casaDestino) {
+      const origem = pecaSelecionada.parentElement;
+      const [linhaOrigem, colunaOrigem] = [parseInt(origem.dataset.linha), parseInt(origem.dataset.coluna)];
+      const [linhaDestino, colunaDestino] = [parseInt(casaDestino.dataset.linha), parseInt(casaDestino.dataset.coluna)];
+
+      // Verifica se a casa de destino já tem uma peça
+      if (casaDestino.querySelector('.peca')) {
+        alert('Este quadrado já está ocupado!');
+        return;
+      }
+
+      const deltaLinha = linhaDestino - linhaOrigem;
+      const deltaColuna = colunaDestino - colunaOrigem;
+
+      if (podeCapturar(deltaLinha, deltaColuna, origem, casaDestino)) {
+        capturarPeca(origem, casaDestino);
+      } else if (podeMover(deltaLinha, deltaColuna, origem)) {
+        casaDestino.appendChild(pecaSelecionada);
+        pecaSelecionada.classList.remove('selecionada');
+        pecaSelecionada = null;
+        alternarTurno();
+      }
+    }
+
+    function podeMover(deltaLinha, deltaColuna, origem) {
+      const peca = origem.querySelector('.peca');
+      const cor = peca.classList.contains('preta-peca') ? 'preta' : 'branca';
+
+      // Se a peça chegou na última linha, ela pode se mover para trás ou para frente
+      const ultimaLinha = cor === 'preta' ? 7 : 0;
+      if (origem.dataset.linha == ultimaLinha) {
+        return Math.abs(deltaLinha) === 1 && Math.abs(deltaColuna) === 1;
+      } else {
+        // Peças normais só podem se mover para frente
+        return cor === 'preta' ? deltaLinha === 1 && Math.abs(deltaColuna) === 1 : deltaLinha === -1 && Math.abs(deltaColuna) === 1;
+      }
+    }
+
+    function podeCapturar(deltaLinha, deltaColuna, origem, destino) {
+      return Math.abs(deltaLinha) === 2 && Math.abs(deltaColuna) === 2 &&
+             verificarCaptura(origem, destino);
+    }
+
+    function verificarCaptura(origem, destino) {
+      const linhaMeio = (parseInt(origem.dataset.linha) + parseInt(destino.dataset.linha)) / 2;
+      const colunaMeio = (parseInt(origem.dataset.coluna) + parseInt(destino.dataset.coluna)) / 2;
+      const casaMeio = document.querySelector(`[data-linha="${linhaMeio}"][data-coluna="${colunaMeio}"]`);
+      const pecaMeio = casaMeio?.querySelector('.peca');
+      if (!pecaMeio || pecaMeio === pecaSelecionada) return false;
+
+      const corSelecionada = pecaSelecionada.classList.contains('preta-peca') ? 'preta' : 'branca';
+      const corMeio = pecaMeio.classList.contains('preta-peca') ? 'preta' : 'branca';
+      return corSelecionada !== corMeio;
+    }
+
+    function capturarPeca(origem, destino) {
+      const linhaMeio = (parseInt(origem.dataset.linha) + parseInt(destino.dataset.linha)) / 2;
+      const colunaMeio = (parseInt(origem.dataset.coluna) + parseInt(destino.dataset.coluna)) / 2;
+      const casaMeio = document.querySelector(`[data-linha="${linhaMeio}"][data-coluna="${colunaMeio}"]`);
+      const pecaCapturada = casaMeio.querySelector('.peca');
+      if (pecaCapturada) {
+        casaMeio.removeChild(pecaCapturada);
+        atualizarPontuacao(pecaCapturada);
+      }
+      destino.appendChild(pecaSelecionada);
+      pecaSelecionada.classList.remove('selecionada');
+      pecaSelecionada = null;
+      alternarTurno();
+    }
+
+    function atualizarPontuacao(pecaCapturada) {
+      const vencedor = turno === 0 ? 0 : 1;
+      score[vencedor] += 100;
+      pontuacao.textContent = `Pontuação: ${nomes[0]} - ${score[0]} | ${nomes[1]} - ${score[1]}`;
+    }
+
+    function alternarTurno() {
+      turno = (turno + 1) % 2;
+      mensagem.innerHTML = `<strong>Vez de: ${nomes[turno]}</strong>`;
+      nomeJogador.textContent = `${nomes[turno]} - Cor: ${turno === 0 ? 'Preto' : 'Branco'}`;
+      nomeJogador.style.color = turno === 0 ? '#000000' : '#ffffff';
+    }
+
+    configBtn.addEventListener('click', () => {
+      menuConfig.style.display = menuConfig.style.display === 'none' ? 'flex' : 'none';
+    });
+
+    irParaInicio.addEventListener('click', () => {
+      location.reload();
+    });
+
+    resetarPartida.addEventListener('click', () => {
+      score = [0, 0];
+      atualizarPontuacao();
+      criarTabuleiro();
+      turno = 0;
+      mensagem.innerHTML = `<strong>Vez de: ${nomes[turno]}</strong>`;
+      nomeJogador.textContent = `${nomes[turno]} - Cor: ${turno === 0 ? 'Preto' : 'Branco'}`;
+    });
+
+
+
+
+
+
+    function éDama(peca) {
+  return peca.dataset.dama === 'true';
+}
+
+function podeMover(deltaLinha, deltaColuna, origem) {
+  const peca = origem.querySelector('.peca');
+  const cor = peca.classList.contains('preta-peca') ? 'preta' : 'branca';
+
+  if (éDama(peca)) {
+    // Dama pode se mover qualquer distância na diagonal
+    return Math.abs(deltaLinha) === Math.abs(deltaColuna) && caminhoLivre(origem, deltaLinha, deltaColuna);
+  } else {
+    // Peça normal
+    return cor === 'preta' ? deltaLinha === 1 && Math.abs(deltaColuna) === 1 : deltaLinha === -1 && Math.abs(deltaColuna) === 1;
+  }
+}
+
+function podeCapturar(deltaLinha, deltaColuna, origem, destino) {
+  const peca = origem.querySelector('.peca');
+  
+  if (éDama(peca)) {
+    // Dama pode capturar qualquer peça em linha reta diagonal
+    return Math.abs(deltaLinha) === Math.abs(deltaColuna) && capturarComoDama(origem, destino);
+  } else {
+    // Peça normal só captura pulando 2 casas
+    return Math.abs(deltaLinha) === 2 && Math.abs(deltaColuna) === 2 && verificarCaptura(origem, destino);
+  }
+}
+
+// Função para verificar se caminho está livre para movimentação da dama
+function caminhoLivre(origem, deltaLinha, deltaColuna) {
+  let passoLinha = deltaLinha > 0 ? 1 : -1;
+  let passoColuna = deltaColuna > 0 ? 1 : -1;
+  let linhaAtual = parseInt(origem.dataset.linha) + passoLinha;
+  let colunaAtual = parseInt(origem.dataset.coluna) + passoColuna;
+
+  while (linhaAtual !== parseInt(origem.dataset.linha) + deltaLinha) {
+    const casaAtual = document.querySelector(`[data-linha="${linhaAtual}"][data-coluna="${colunaAtual}"]`);
+    if (casaAtual.querySelector('.peca')) {
+      return false; // Algo no caminho bloqueando
+    }
+    linhaAtual += passoLinha;
+    colunaAtual += passoColuna;
+  }
+  return true;
+}
+
+// Função para capturar como dama (permitir capturar peça adversária no caminho)
+function capturarComoDama(origem, destino) {
+  let linhaOrigem = parseInt(origem.dataset.linha);
+  let colunaOrigem = parseInt(origem.dataset.coluna);
+  let linhaDestino = parseInt(destino.dataset.linha);
+  let colunaDestino = parseInt(destino.dataset.coluna);
+
+  let passoLinha = linhaDestino > linhaOrigem ? 1 : -1;
+  let passoColuna = colunaDestino > colunaOrigem ? 1 : -1;
+
+  linhaOrigem += passoLinha;
+  colunaOrigem += passoColuna;
+
+  let encontrouInimigo = false;
+
+  while (linhaOrigem !== linhaDestino && colunaOrigem !== colunaDestino) {
+    const casaAtual = document.querySelector(`[data-linha="${linhaOrigem}"][data-coluna="${colunaOrigem}"]`);
+    const pecaAtual = casaAtual.querySelector('.peca');
+
+    if (pecaAtual) {
+      if (pecaAtual.classList.contains(pecaSelecionada.classList.contains('preta-peca') ? 'preta-peca' : 'branca-peca')) {
+        // Peça da mesma cor bloqueia
+        return false;
+      } else if (!encontrouInimigo) {
+        // Primeiro inimigo encontrado
+        encontrouInimigo = { casa: casaAtual, peca: pecaAtual };
+      } else {
+        // Mais de um inimigo no caminho, não pode
+        return false;
+      }
+    }
+
+    linhaOrigem += passoLinha;
+    colunaOrigem += passoColuna;
+  }
+
+  if (encontrouInimigo) {
+    // Remove a peça capturada
+    encontrouInimigo.casa.removeChild(encontrouInimigo.peca);
+    atualizarPontuacao(encontrouInimigo.peca);
+    return true;
+  }
+
+  return false;
+}
+
+
+// Se a peça chegou no final, vira dama
+const linhaFinalPreta = 7;
+const linhaFinalBranca = 0;
+const linhaDestinoAtual = parseInt(casaDestino.dataset.linha);
+
+if (
+  (pecaSelecionada.classList.contains('preta-peca') && linhaDestinoAtual === linhaFinalPreta) ||
+  (pecaSelecionada.classList.contains('branca-peca') && linhaDestinoAtual === linhaFinalBranca)
+) {
+  pecaSelecionada.dataset.dama = 'true';
+  pecaSelecionada.style.backgroundImage = 'radial-gradient(circle, gold 30%, #000 70%)'; // Exemplo: aparência diferente pra dama
+}
+
+if ((jogador === 1 && linhaDestino === 0) || (jogador === 2 && linhaDestino === 7)) {
+  peça.classList.add("dama");
+}
+
+    
+
+function limparCasasPossiveis() {
+  document.querySelectorAll('.casa').forEach(casa => {
+    casa.classList.remove('possivel');
+  });
+}
+function mostrarMovimentosPossiveis(peca) {
+  limparCasasPossiveis();
+
+  const origem = peca.parentElement;
+  const linhaOrigem = parseInt(origem.dataset.linha);
+  const colunaOrigem = parseInt(origem.dataset.coluna);
+  const cor = peca.classList.contains('preta-peca') ? 'preta' : 'branca';
+
+  let movimentos = [];
+
+  // Testar todas as direções diagonais
+  const direcoes = [
+    [-1, -1], [-1, 1],
+    [1, -1], [1, 1]
+  ];
+
+  for (let [dx, dy] of direcoes) {
+    let x = linhaOrigem + dx;
+    let y = colunaOrigem + dy;
+
+    while (x >= 0 && x < 8 && y >= 0 && y < 8) {
+      const casa = document.querySelector(`[data-linha="${x}"][data-coluna="${y}"]`);
+      if (!casa) break;
+
+      const ocupante = casa.querySelector('.peca');
+
+      if (!ocupante) {
+        if (peca.dataset.dama === 'true' || Math.abs(x - linhaOrigem) === 1) {
+          movimentos.push(casa);
+        }
+        if (peca.dataset.dama !== 'true') break; // Peça normal só anda 1
+      } else {
+        const corOponente = ocupante.classList.contains('preta-peca') ? 'preta' : 'branca';
+        if (corOponente !== cor) {
+          const casaApos = document.querySelector(`[data-linha="${x + dx}"][data-coluna="${y + dy}"]`);
+          if (casaApos && !casaApos.querySelector('.peca')) {
+            movimentos.push(casaApos);
+          }
+        }
+        break;
+      }
+
+      if (peca.dataset.dama !== 'true') break;
+      x += dx;
+      y += dy;
+    }
+  }
+
+  // Se houver captura, filtra só elas
+  const apenasCapturas = movimentos.filter(c => {
+    const linha = parseInt(c.dataset.linha);
+    const coluna = parseInt(c.dataset.coluna);
+    const deltaLinha = linha - linhaOrigem;
+    const deltaColuna = coluna - colunaOrigem;
+    return podeCapturar(deltaLinha, deltaColuna, origem, c);
+  });
+
+  const casasFinais = apenasCapturas.length > 0 ? apenasCapturas : movimentos;
+
+  casasFinais.forEach(casa => casa.classList.add('possivel'));
+
+  return apenasCapturas.length > 0;
+}
+
+
+function selecionarPeca(peca) {
+  if (pecaSelecionada) {
+    pecaSelecionada.classList.remove('selecionada');
+  }
+  pecaSelecionada = peca;
+  pecaSelecionada.classList.add('selecionada');
+
+  const obrigatorioCapturar = mostrarMovimentosPossiveis(pecaSelecionada);
+}
+
+
+function aoClicar(casa) {
+  const peca = casa.querySelector('.peca');
+
+  if (peca && éVezDoJogador(peca)) {
+    selecionarPeca(peca);
+  } else if (pecaSelecionada) {
+    if (!casa.classList.contains('possivel')) {
+      alert('Você deve capturar uma peça se possível!');
+      return;
+    }
+    moverPeca(casa);
+    limparCasasPossiveis();
+  }
+}
+
+
+function mostrarMovimentosPossiveis(peca) {
+  limparCasasPossiveis();
+
+  const origem = peca.parentElement;
+  const linhaOrigem = parseInt(origem.dataset.linha);
+  const colunaOrigem = parseInt(origem.dataset.coluna);
+  const cor = peca.classList.contains('preta-peca') ? 'preta' : 'branca';
+  const isDama = peca.dataset.dama === 'true';
+
+  let movimentos = [];
+  let capturas = [];
+
+  const direcoes = [
+    [-1, -1], [-1, 1],
+    [1, -1], [1, 1]
+  ];
+
+  for (let [dx, dy] of direcoes) {
+    // Peça comum só pode andar para frente
+    if (!isDama) {
+      if ((cor === 'preta' && dx !== 1) || (cor === 'branca' && dx !== -1)) {
+        continue;
+      }
+    }
+
+    let x = linhaOrigem + dx;
+    let y = colunaOrigem + dy;
+
+    while (x >= 0 && x < 8 && y >= 0 && y < 8) {
+      const casa = document.querySelector(`[data-linha="${x}"][data-coluna="${y}"]`);
+      if (!casa) break;
+
+      const ocupante = casa.querySelector('.peca');
+
+      if (!ocupante) {
+        if (isDama || Math.abs(x - linhaOrigem) === 1) {
+          movimentos.push(casa);
+        }
+        if (!isDama) break;
+      } else {
+        const corOponente = ocupante.classList.contains('preta-peca') ? 'preta' : 'branca';
+        if (corOponente !== cor) {
+          const casaApos = document.querySelector(`[data-linha="${x + dx}"][data-coluna="${y + dy}"]`);
+          if (casaApos && !casaApos.querySelector('.peca')) {
+            capturas.push(casaApos);
+          }
+        }
+        break;
+      }
+
+      if (!isDama) break;
+      x += dx;
+      y += dy;
+    }
+  }
+
+  const casasFinais = capturas.length > 0 ? capturas : movimentos;
+
+  casasFinais.forEach(casa => casa.classList.add('possivel'));
+
+  return capturas.length > 0;
+}
+
+function existeCapturaDisponivel(jogador) {
+  const pecas = document.querySelectorAll(`.${jogador}-peca`);
+  for (let peca of pecas) {
+    if (mostrarMovimentosPossiveis(peca)) {
+      limparCasasPossiveis(); // só checando, não queremos mostrar
+      return true;
+    }
+  }
+  return false;
+}
+
+function aoClicar(casa) {
+  const peca = casa.querySelector('.peca');
+
+  if (peca && éVezDoJogador(peca)) {
+    const jogador = peca.classList.contains('preta-peca') ? 'preta' : 'branca';
+
+    // Verifica se existe alguma captura obrigatória
+    const existeCaptura = existeCapturaDisponivel(jogador);
+
+    if (existeCaptura && !mostrarMovimentosPossiveis(peca)) {
+      alert('Você só pode mover a peça que pode capturar!');
+      return;
+    }
+
+    selecionarPeca(peca);
+  } else if (pecaSelecionada) {
+    if (!casa.classList.contains('possivel')) {
+      alert('Movimento inválido. Você deve capturar se possível!');
+      return;
+    }
+    moverPeca(casa);
+    limparCasasPossiveis();
+  }
+}
+
+
+// Função para atualizar o painel de ranking
+function atualizarRanking() {
+  const painel = document.getElementById("painelRanking");
+  const mensagem = document.getElementById("mensagemRanking");
+  const vitorias = localStorage.getItem("vitorias");
+
+  if (!vitorias || parseInt(vitorias) === 0) {
+    mensagem.innerText = "Nenhum jogo registrado ainda.";
+  } else {
+    mensagem.innerText = `Vitórias registradas: ${vitorias}`;
+  }
+
+  painel.classList.add("painel-aberto");
+  painel.classList.remove("painel-fechado");
+}
+
+// Função para fechar o painel
+function fecharRanking() {
+  const painel = document.getElementById("painelRanking");
+  painel.classList.remove("painel-aberto");
+  painel.classList.add("painel-fechado");
+}
+
+// Evento do botão para abrir
+document.getElementById("abrirRanking").addEventListener("click", atualizarRanking);
+
+function registrarVitoria() {
+  let vitorias = parseInt(localStorage.getItem("vitorias")) || 0;
+  vitorias++;
+  localStorage.setItem("vitorias", vitorias);
+}
+
+
+function atualizarRanking() {
+      const painel = document.getElementById("painelRanking");
+      const mensagem = document.getElementById("mensagemRanking");
+      const vitorias = localStorage.getItem("vitorias");
+
+      if (!vitorias || parseInt(vitorias) === 0) {
+        mensagem.innerText = "Nenhum jogo registrado ainda.";
+      } else {
+        mensagem.innerText = `Vitórias registradas: ${vitorias}`;
+      }
+
+      painel.classList.add("painel-aberto");
+    }
+
+    function fecharRanking() {
+      const painel = document.getElementById("painelRanking");
+      painel.classList.remove("painel-aberto");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const botao = document.getElementById("abrirRanking");
+      if (botao) {
+        botao.addEventListener("click", atualizarRanking);
+      }
+    });
+
+
+    function atualizarRanking() {
+      const painel = document.getElementById("painelRanking");
+      const mensagem = document.getElementById("mensagemRanking");
+      const vitorias = parseInt(localStorage.getItem("vitorias") || 0);
+
+      mensagem.innerText = vitorias === 0
+        ? "Nenhum jogo registrado ainda."
+        : `Vitórias registradas: ${vitorias}`;
+
+      painel.classList.add("painel-aberto");
+    }
+
+    function fecharRanking() {
+      document.getElementById("painelRanking").classList.remove("painel-aberto");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("abrirRanking").addEventListener("click", atualizarRanking);
+
+      document.getElementById("adicionarBtn").addEventListener("click", () => {
+        let vitorias = parseInt(localStorage.getItem("vitorias") || 0);
+        vitorias++;
+        localStorage.setItem("vitorias", vitorias);
+        atualizarRanking();
+      });
+
+      document.getElementById("resetarBtn").addEventListener("click", () => {
+        localStorage.setItem("vitorias", 0);
+        atualizarRanking();
+      });
+    });
+
+  </script>
+
+  <!-- Botões -->
+<div class="botoes-container">
+  <button class="botao" onclick="reiniciarJogo()">🔄 Reiniciar</button>
+  <button class="botao" onclick="window.location.href='index.html'">🏠 Início</button>
+</div>
+
+<!-- Painel de Vitórias -->
+<div id="painelRanking" class="painel-ranking">
+  <h2>Vitórias</h2>
+  <p id="mensagemRanking">Nenhum jogo registrado ainda.</p>
+  <button class="fechar-ranking" onclick="fecharRanking()">Fechar</button>
+</div>
+
+
+
+
+</body>
+</html>
