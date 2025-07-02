@@ -36,6 +36,7 @@
 
 ---
 
+
 Feito com ❤️ por [Icaro](https://github.com/Icarox52)  
 🎯 **Desafie seus amigos e divirta-se!** ♟️🔥
 
