@@ -1,4 +1,4 @@
-# ♟️ Jogo de Damas Online
+# ♟️ Jogo de Damas
 
 [![Live Demo](https://img.shields.io/badge/Jogar-Live%20Site-brightgreen?style=for-the-badge)](https://icarox52.github.io/jogoDeDamasparte2./)
 [![GitHub stars](https://img.shields.io/github/stars/Icarox52/jogoDeDamasparte2?style=for-the-badge)](https://github.com/Icarox52/jogoDeDamasparte2./stargazers)
