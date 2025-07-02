@@ -1,34 +1,42 @@
-# 🌟 Jogo de damas
+# ♟️ Jogo de Damas Online
 
-[![Acesso jogo](https://img.shields.io/badge/🚀_Acessar_Portfólio-FF5722?style=for-the-badge&logo=github&logoColor=white)](https://icarox52.github.io/portfolio/)
-[![GitHub Stars](https://img.shields.io/github/stars/Icarox52/portfolio?style=for-the-badge)](https://github.com/Icarox52/portfolio/stargazers)
+[![Live Demo](https://img.shields.io/badge/Jogar-Live%20Site-brightgreen?style=for-the-badge)](https://icarox52.github.io/jogoDeDamasparte2./damas.html)
+[![GitHub stars](https://img.shields.io/github/stars/Icarox52/jogoDeDamasparte2?style=for-the-badge)](https://github.com/Icarox52/jogoDeDamasparte2/stargazers)
 
-<a href="https://icarox52.github.io/portfolio/"><img src=""></a>
+<a href="https://icarox52.github.io/jogoDeDamasparte2./damas.html"><img src="https://via.placeholder.com/800x400/242424/ffffff?text=Jogo+de+Damas+Preview" alt="Preview do Jogo"/></a>
 
+✨ **Jogo de Damas completo** com inteligência artificial e multiplayer local desenvolvido em JavaScript puro.
+
+## 🎮 Recursos Especiais
+
+  - Player vs Player (local)
+- **Sistema de pontuação** 📊
+- **Efeitos sonoros imersivos** 🔊
+- **Animação de movimentos suaves** ✨
+- **Destaque visual de jogadas válidas** 🔍
+- **Regras tradicionais de damas** 📜
+  - Capturas obrigatórias
+  - Promoção a dama
+  - Movimentos múltiplos
 
 ## 🛠️ Tecnologias Utilizadas
 
-<div align="center">
-  
-![HTML5](https://img.shields.io/badge/HTML5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+| Tecnologia | Função |
+|------------|--------|
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="20"/> **HTML5** | Estrutura do tabuleiro |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="20"/> **CSS3** | Estilo e animações |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="20"/> **JavaScript** | Lógica do jogo e IA |
 
-</div>
+## 🌐 Como Jogar
 
+1. Acesse o [jogo online](https://icarox52.github.io/jogoDeDamasparte2./damas.html)
+2. Escolha o modo de jogo:
+   - 🤖 Contra a CPU
+   - 👥 Dois jogadores (mesmo dispositivo)
+3. Clique na peça e depois na casa destino
+4. Divirta-se! 🎉
 
-## 🌟 Recursos Especiais
+---
 
-- ✨ **Animações Suaves** em CSS3
-- 📱 **Totalmente Responsivo**
-- 📬 **Formulário de Contato Funcional**
-
-
-<div align="center">
-  
-💻 **Desenvolvido com paixão por [Icaro Machado](https://github.com/Icarox52)**  
-📧 **Contato profissional:** [](WhatsApp)  
-
-[![GitHub Follow](https://img.shields.io/github/followers/Icarox52?style=social&label=Seguir)](https://github.com/Icarox52)
-
-</div>
+Feito com ❤️ por [Icaro](https://github.com/Icarox52)  
+🎯 **Desafie seus amigos e divirta-se!** ♟️🔥
