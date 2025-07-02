@@ -38,3 +38,5 @@
 
 Feito com ❤️ por [Icaro](https://github.com/Icarox52)  
 🎯 **Desafie seus amigos e divirta-se!** ♟️🔥
+
+[![GitHub Follow](https://img.shields.io/github/followers/Icarox52?style=social&label=Seguir)](https://github.com/Icarox52)
